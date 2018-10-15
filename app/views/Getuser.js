@@ -1,6 +1,8 @@
 import React from 'react';
-import { StyleSheet, ActivityIndicator, View, TouchableNativeFeedback } from 'react-native';
+import { StyleSheet, ActivityIndicator, View, AsyncStorage } from 'react-native';
 import {Container,  Row, Header, Content, Form, Item, Input, Label, Button, Text} from 'native-base';
+import { Home } from './Home.js';
+import { App } from '../../App';
 
 export class Getuser extends React.Component {
   constructor(props){
@@ -11,18 +13,24 @@ export class Getuser extends React.Component {
       user: null,
       auth: null,
       gets: () => {
-        fetch(`http://192.168.1.6:3000/api/getuser?auth=${this.state.auth}`)
+        this.setState.isLoading= true;
+        fetch(`https://salty-garden-64535.herokuapp.com/api/getuser?auth=${this.state.auth}`)
              .then((response) => response.json())
              .then( (responseJson) => {
+                let use= JSON.stringify(responseJson);
+                AsyncStorage.setItem('user', use);
                //console.log(responseJson);
                this.setState({
                  isLoading: false,
                  gotUser: responseJson,
-                 user: responseJson.token
-               })
+                 user: responseJson.name
+               });
              }).catch((error) => {
                console.log(error);
            })
+           console.log(this.state.user);
+           this.setState.isLoading= false;
+
       }
     }
   };
@@ -59,12 +67,10 @@ this.setState.isLoading= false;
       //   //redirect_to
       //
       // }
-    }
+      }
     else if (this.state.user) {
       return(
-        <View>
-          <Text> Has got user {this.state.user} </Text>
-        </View>
+      <Home user={this.state.gotUser} /> /////!!!!!!!
       );
 
     }
@@ -74,10 +80,9 @@ this.setState.isLoading= false;
 
        <Content style={styles.contents} >
          <Form style= {styles.form}>
-           <Item floatingLabel first >
-             <Label>Insert Authentication Code</Label>
-             <Input secureTextEntry
-              onChangeText={(text) => this.setState({auth: text})} />
+           <Item floatingLabel firs title="title">
+            // <Label>Insert Authentication Code</Label>
+             <Input secureTextEntry onChangeText={(text) => { this.state.auth= text}} />
            </Item>
          </Form>
          <Button rounded block
@@ -102,16 +107,17 @@ const styles= StyleSheet.create({
     flex:1,
     backgroundColor:'#05fbfc',
     justifyContent:'center',
-  },
-  contents:{
-    marginTop:10
-  },
-  form: {
-    bottom: 10
-  },
-  button:{
-    marginTop: 5,
-
   }
+  // contents:{
+  //   marginTop:10
+  // },
+  // form: {
+  //   bottom: 10
+  // },
+  // button:{
+  //   marginTop: 5
+  //}
+
+
 
 })
