@@ -3,6 +3,8 @@ import { StyleSheet, ActivityIndicator, View, AsyncStorage } from 'react-native'
 import {Container,  Row, Header, Content, Form, Item, Input, Label, Button, Text} from 'native-base';
 import { Home } from './Home.js';
 import { App } from '../../App';
+import './Storage.js';
+
 
 export class Getuser extends React.Component {
   constructor(props){
@@ -18,17 +20,24 @@ export class Getuser extends React.Component {
              .then((response) => response.json())
              .then( (responseJson) => {
                 let use= JSON.stringify(responseJson);
-                AsyncStorage.setItem('user', use);
-               //console.log(responseJson);
-               this.setState({
-                 isLoading: false,
-                 gotUser: responseJson,
-                 user: responseJson.name
+                global.storage.save({
+                  key: 'user',
+                  data: { responseJson }, //or use. stringified. needs map?
+                  expires: 1000 * 3600
+              });
+              this.setState({
+                isLoading: false,
+                gotUser: responseJson,
+                user: responseJson.name
+
                });
+               console.log(String(responseJson) + "THISIS responsJSON");
+               console.log(String(this.state.user) + "THISISSTATE.USER");
+               console.log(String(use) + "this is STINGIFYIED");
              }).catch((error) => {
                console.log(error);
            })
-           console.log(this.state.user);
+
            this.setState.isLoading= false;
 
       }

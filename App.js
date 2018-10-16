@@ -3,7 +3,8 @@ import { AsyncStorage } from 'react-native';
 //import { StyleSheet, Text, View } from 'react-native';
 import { Home } from './app/views/Home.js';
 import { Getuser} from './app/views/Getuser.js';
-import './reactotronConfig'
+import './app/views/Storage.js';
+
 import Reactotron, { asyncStorage } from 'reactotron-react-native'; //notconneting
 
 export default class App extends React.Component {
@@ -18,22 +19,24 @@ constructor() {
                userdata: '',
                indata: ''}
 
+}
 
-               const gets= async () => {
+
+async gets()  {
                  try {
-                   let use1= await AsyncStorage.getItem('user');
+                   let use1= await global.storage.load({key: 'user'});
+                   if (use1 !== null) {
+                     const use2= use1['responseJson'];
+                     //console.log(`${use1["name"]} u1name in app.js`);
+                     console.log(`${use2.name} in app.js`);
+                     this.setState({user: use2.name, userdata: use2});
+                     console.log(use2);
+                   }
                  }  catch (error){
                      console.log(error);
                      return null
                    }
-                 if (use1 !== null) {
-                   const use2= JSON.parse(use1);
-                   this.setState({user: use2.name, userdata: use2});
-                   console.log(use2);
-                 }
-
                }
-}
 
 
 
@@ -43,7 +46,7 @@ async componentWillMount() {
     'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
 
 });
-
+this.gets();
 // try {
 //   guser = AsyncStorage.getItem('user');
 //   let use= JSON.parse(guser);
@@ -55,11 +58,11 @@ async componentWillMount() {
 // }
 //getUser();
 this.setState({isReady:true});
-this.props.gets;
+
 }
 
 componentDidMount(){
-  //getUser();
+//gets();
 
 }
 

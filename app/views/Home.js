@@ -38,7 +38,7 @@ export class Home extends React.Component {
             </Row>
             <Divider />
             <Row>
-              <Text> {this.props.user.bio} </Text>
+              <Text> "{this.props.user.bio}" </Text>
             </Row>
           </Col>
         </Row>
