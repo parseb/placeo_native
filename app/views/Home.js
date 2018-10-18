@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, AsyncStorage } from 'react-native';
-import {Container,  View, Row, Col, Header, Content, Form, Item, Input, Label, Button} from 'native-base';
+import { StyleSheet, AsyncStorage, Image } from 'react-native';
+import {Container,  View, Row, Col, Header, Card, CardItem, Body, Content, Form, Item, Input, Label, Button} from 'native-base';
 import { Avatar, Text, Divider } from 'react-native-elements';
 
 export class Home extends React.Component {
@@ -10,6 +10,8 @@ export class Home extends React.Component {
     this.state={
     joins: false,
     creates: false,
+    session: null,
+
   }
   }
 
@@ -44,7 +46,38 @@ export class Home extends React.Component {
         </Row>
         </Container>
         <Container style={styles.containerbody}>
+        <Content>
+        <Card>
+          <CardItem header style={{justifyContent: 'center'}}>
+            <Text style={{fontWeight: 'bold'}}> Created Last: </Text>
+          </CardItem>
+          <Divider />
+          <CardItem>
+              <Body>
+              <Text> </Text>
+              <View>
+                <Image source={{uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png'}} />
+              </View>
+            </Body>
+          </CardItem>
+       </Card>
+      </Content>
 
+      <Content>
+        <Card>
+          <CardItem header style={{justifyContent: 'center'}}>
+            <Text style={{fontWeight: 'bold'}}>Created Session</Text>
+          </CardItem>
+          <Divider />
+          <CardItem>
+            <Body>
+              <Text>
+                Scan Code
+              </Text>
+            </Body>
+          </CardItem>
+       </Card>
+     </Content>
         </Container>
       </Container>
     );
