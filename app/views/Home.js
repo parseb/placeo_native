@@ -2,15 +2,46 @@ import React from 'react';
 import { StyleSheet, AsyncStorage, Image } from 'react-native';
 import {Container,  View, Row, Col, Header, Card, CardItem, Body, Content, Form, Item, Input, Label, Button} from 'native-base';
 import { Avatar, Text, Divider } from 'react-native-elements';
+import { InSession } from './InSession.js';
+
 
 export class Home extends React.Component {
   constructor(props){
     super(props);
     //let user
     this.state={
+    auth: this.props.user.auth,
     joins: false,
     creates: false,
-    session: null,
+    sessiondata: null,
+    joins: "",
+    joinsf: () => {
+        this.setState.isLoading= true;
+        //fetch(`https://salty-garden-64535.herokuapp.com/api/getuser?joincode=${this.state.joins}?auth=${this.props.user.auth}`) #remote
+        fetch(`http://192.168.1.6:3000/api/joins?joincode=${this.state.joins}`)
+             .then((response) => response.json())
+             .then( (responseJson) => {
+                let use= JSON.stringify(responseJson);
+                global.storage.save({
+                  key: 'sessiondata',
+                  data: { responseJson }, //or use. stringified. needs map?
+                  expires: 1000 * 3600
+              });
+              this.setState({
+                isLoading: false,
+                sessiondata: responseJson,
+                               });
+               console.log(use);
+               console.log(String(responseJson.session) + "THISIS responsJSON");
+               console.log(String(this.state.sessiondata) + "THISISSTATE.USER");
+               console.log(String(sessiondata) + "this is STINGIFYIED");
+             }).catch((error) => {
+               console.log(error);
+           })
+
+           this.setState.isLoading= false;
+
+      }
 
   }
   }
@@ -19,7 +50,11 @@ export class Home extends React.Component {
   render(){
     //let userdata= JSON.parse(AsyncStorage.getItem('user'));
     //if (this.props.user) { return ( <View> <Text> {this.props.user} zzz </Text> </View>)}
-
+    if (this.state.sessiondata) {
+      return(
+        <InSession sesdatatest={this.state.sessiondata.name}/>
+      );
+    } else {
     return (
       <Container style={{flex:1}}>
         <Container style={styles.containertop}>
@@ -46,23 +81,19 @@ export class Home extends React.Component {
         </Row>
         </Container>
         <Container style={styles.containerbody}>
-        <Content>
-        <Card>
-          <CardItem header style={{justifyContent: 'center'}}>
-            <Text style={{fontWeight: 'bold'}}> Created Last: </Text>
-          </CardItem>
-          <Divider />
-          <CardItem>
-              <Body>
-              <Text> </Text>
-              <View>
-                <Image source={{uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png'}} />
-              </View>
-            </Body>
-          </CardItem>
-       </Card>
-      </Content>
-
+        <Content style={styles.contents} >
+          <Form style= {styles.form}>
+            <Item floatingLabel first title="text">
+              <Label>Insert Join Code</Label>
+              <Input secureTextEntry onChangeText={(text) => { this.state.joins= text}} />
+            </Item>
+          </Form>
+          <Button rounded block
+          style={styles.button}
+          onPress={this.state.joinsf} >
+             <Text> Join Session </Text>
+         </Button>
+        </Content>
       <Content>
         <Card>
           <CardItem header style={{justifyContent: 'center'}}>
@@ -81,6 +112,7 @@ export class Home extends React.Component {
         </Container>
       </Container>
     );
+  }
     }
 }
 

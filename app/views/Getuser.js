@@ -16,7 +16,8 @@ export class Getuser extends React.Component {
       auth: null,
       gets: () => {
         this.setState.isLoading= true;
-        fetch(`https://salty-garden-64535.herokuapp.com/api/getuser?auth=${this.state.auth}`)
+        //fetch(`https://salty-garden-64535.herokuapp.com/api/getuser?auth=${this.state.auth}`)  //remote
+        fetch(`http://192.168.1.6:3000/api/getuser?auth=${this.state.auth}`)
              .then((response) => response.json())
              .then( (responseJson) => {
                 let use= JSON.stringify(responseJson);
