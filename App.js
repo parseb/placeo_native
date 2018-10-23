@@ -31,6 +31,13 @@ async gets()  {
                      console.log(`${use2.name} in app.js`);
                      this.setState({user: use2.name, userdata: use2});
                      console.log(use2);
+
+                    let insession= await global.storage.load({key: 'sessiondata'});
+                    if (insession !==null) {
+                      const insession2= insession['responseJson'];
+                      console.log(`${insession2} in appjs`);
+                      this.setState({insession: insession2});
+                    }
                    }
                  }  catch (error){
                      console.log(error);
@@ -74,7 +81,7 @@ componentDidMount(){
     else
         return (
       //this.state.use
-          this.state.user ?   <Home user= {this.state.userdata } /> : <Getuser />
+          this.state.user ?   <Home user= {this.state.userdata} sess={this.state.insession} /> : <Getuser />
     );
     end
   }

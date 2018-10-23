@@ -11,9 +11,8 @@ export class Home extends React.Component {
     //let user
     this.state={
     auth: this.props.user.auth,
-    joins: false,
     creates: false,
-    sessiondata: null,
+    sessiondata: '',
     joins: "",
     joinsf: () => {
         this.setState.isLoading= true;
@@ -34,7 +33,6 @@ export class Home extends React.Component {
                console.log(use);
                console.log(String(responseJson.session) + "THISIS responsJSON");
                console.log(String(this.state.sessiondata) + "THISISSTATE.USER");
-               console.log(String(sessiondata) + "this is STINGIFYIED");
              }).catch((error) => {
                console.log(error);
            })
@@ -52,9 +50,14 @@ export class Home extends React.Component {
     //if (this.props.user) { return ( <View> <Text> {this.props.user} zzz </Text> </View>)}
     if (this.state.sessiondata) {
       return(
-        <InSession sesdatatest={this.state.sessiondata.name}/>
+        <InSession sesdata={this.state.sessiondata}/>
       );
-    } else {
+    } else if (this.props.sess) {
+      return(
+        <InSession sesdata={this.props.sess}/>
+      );
+    }
+    else {
     return (
       <Container style={{flex:1}}>
         <Container style={styles.containertop}>
