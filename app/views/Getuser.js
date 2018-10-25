@@ -90,8 +90,8 @@ this.setState.isLoading= false;
 
        <Content style={styles.contents} >
          <Form style= {styles.form}>
-           <Item floatingLabel firs title="title">
-            // <Label>Insert Authentication Code</Label>
+           <Item floatingLabel title="title">
+             <Label>Insert Authentication Code</Label>
              <Input secureTextEntry onChangeText={(text) => { this.state.auth= text}} />
            </Item>
          </Form>

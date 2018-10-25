@@ -1,6 +1,7 @@
 {
   "name": "empty-project-template",
   "main": "node_modules/expo/AppEntry.js",
+  "license": "UNLICENSED",
   "private": true,
   "scripts": {
     "start": "expo start",
@@ -12,8 +13,11 @@
     "@expo/vector-icons": "^8.0.0",
     "expo": "^30.0.1",
     "native-base": "^2.8.1",
+    "pubnub-react": "^1.2.0",
     "react": "16.3.1",
+    "react-actioncable-provider": "^1.0.3",
     "react-native": "https://github.com/expo/react-native/archive/sdk-30.0.0.tar.gz",
+    "react-native-actioncable": "^0.0.3",
     "react-native-elements": "^0.19.1",
     "react-native-storage": "^0.2.3"
   },

@@ -50,11 +50,11 @@ export class Home extends React.Component {
     //if (this.props.user) { return ( <View> <Text> {this.props.user} zzz </Text> </View>)}
     if (this.state.sessiondata) {
       return(
-        <InSession sesdata={this.state.sessiondata}/>
+        <InSession sesdata={this.state.sessiondata} user={this.props.user}/>
       );
     } else if (this.props.sess) {
       return(
-        <InSession sesdata={this.props.sess}/>
+        <InSession sesdata={this.props.sess} user={this.props.user}/>
       );
     }
     else {
