@@ -17,7 +17,7 @@ export class Home extends React.Component {
     joinsf: () => {
         this.setState.isLoading= true;
         //fetch(`https://salty-garden-64535.herokuapp.com/api/getuser?joincode=${this.state.joins}?auth=${this.props.user.auth}`) #remote
-        fetch(`http://192.168.1.6:3000/api/joins?joincode=${this.state.joins}`)
+        fetch(`http://192.168.100.11:3000/api/joins?joincode=${this.state.joins}`)
              .then((response) => response.json())
              .then( (responseJson) => {
                 let use= JSON.stringify(responseJson);

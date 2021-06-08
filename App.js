@@ -4,6 +4,7 @@ import { AsyncStorage } from 'react-native';
 import { Home } from './app/views/Home.js';
 import { Getuser} from './app/views/Getuser.js';
 import './app/views/Storage.js';
+import AppLoading from 'expo-app-loading';
 
 import Reactotron, { asyncStorage } from 'reactotron-react-native'; //notconneting
 
@@ -76,13 +77,12 @@ componentDidMount(){
   render() {
 
     if (!this.state.isReady) {
-          return <Expo.AppLoading />;
+          return <AppLoading />;
         }
     else
         return (
       //this.state.use
           this.state.user ?   <Home user= {this.state.userdata} sess={this.state.insession} /> : <Getuser />
-    );
-    end
+        )
   }
 }
